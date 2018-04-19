@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux';
-import user from './user';
-import runtime from './runtime';
+import stream from './stream';
+import categorySheet from './categorySheet';
+import thumbnail from './thumbnail';
 
 export default combineReducers({
-  user,
-  runtime,
+  stream,
+  categorySheet,
+  thumbnail,
 });

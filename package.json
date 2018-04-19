@@ -3,28 +3,28 @@
   "version": "0.0.0",
   "private": true,
   "engines": {
-    "node": ">=6.13.1",
-    "npm": ">=3.10.10"
+    "node": ">=8.9.3",
+    "npm": ">=5.5.1"
   },
   "browserslist": [">1%", "last 4 versions", "Firefox ESR", "not ie < 9"],
   "dependencies": {
     "@babel/polyfill": "^7.0.0-beta.42",
-    "bluebird": "^3.5.1",
+    "@firebase/app": "^0.1.5",
+    "@firebase/database": "^0.1.6",
+    "axios": "^0.17.1",
     "body-parser": "^1.18.2",
     "classnames": "^2.2.5",
+    "compression": "^1.7.1",
     "cookie-parser": "^1.4.3",
     "core-js": "^2.5.3",
     "express": "^4.16.3",
-    "express-graphql": "^0.6.12",
-    "express-jwt": "^5.3.1",
-    "graphql": "^0.13.2",
+    "google-spreadsheet": "^2.0.4",
     "history": "^4.7.2",
     "isomorphic-style-loader": "^4.0.0",
-    "jsonwebtoken": "^8.2.0",
+    "lodash": "^4.17.5",
+    "newrelic": "^2.5.0",
     "node-fetch": "^2.1.1",
     "normalize.css": "^8.0.0",
-    "passport": "^0.4.0",
-    "passport-facebook": "^2.1.1",
     "pretty-error": "^2.1.1",
     "prop-types": "^15.6.1",
     "query-string": "^6.0.0",
@@ -35,12 +35,11 @@
     "redux-devtools-extension": "^2.13.2",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.2.0",
-    "sequelize": "^4.37.3",
     "serialize-javascript": "^1.4.0",
     "source-map-support": "^0.5.4",
-    "sqlite3": "^4.0.0",
+    "throng": "^4.0.0",
     "universal-router": "^6.0.0",
-    "whatwg-fetch": "^2.0.3"
+    "webshot": "^0.18.0"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0-beta.42",
@@ -74,14 +73,18 @@
     "eslint-plugin-react": "^7.7.0",
     "file-loader": "^1.1.11",
     "flow-bin": "^0.68.0",
+    "foreman": "^2.0.0",
     "front-matter": "^2.3.0",
     "glob": "^7.1.2",
     "husky": "^0.14.3",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^22.4.3",
+    "jest-codemods": "^0.13.9",
+    "jscodeshift": "^0.5.0",
     "lint-staged": "^7.0.0",
     "markdown-it": "^8.4.1",
     "mkdirp": "^0.5.1",
+    "node-sass": "^4.7.2",
     "null-loader": "^0.1.1",
     "opn-cli": "^3.1.0",
     "pixrem": "^4.0.1",
@@ -109,6 +112,7 @@
     "react-test-renderer": "^16.2.0",
     "redux-mock-store": "^1.4.0",
     "rimraf": "^2.6.2",
+    "sass-loader": "^6.0.6",
     "stylelint": "^9.1.3",
     "stylelint-config-standard": "^18.2.0",
     "stylelint-order": "^0.8.1",
@@ -123,7 +127,7 @@
   },
   "lint-staged": {
     "*.{js,jsx}": ["eslint --no-ignore --fix", "git add --force"],
-    "*.{json,md,graphql}": ["prettier --write", "git add --force"],
+    "*.{json,md}": ["prettier --write", "git add --force"],
     "*.{css,less,styl,scss,sass,sss}": ["stylelint --fix", "git add --force"]
   },
   "scripts": {
@@ -148,6 +152,7 @@
     "deploy": "babel-node tools/run deploy",
     "render": "babel-node tools/run render",
     "serve": "babel-node tools/run runServer",
-    "start": "babel-node tools/run start"
+    "start": "babel-node tools/run start",
+    "debug": "babel-node tools/run start --inspect"
   }
 }

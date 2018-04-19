@@ -28,7 +28,8 @@ async function copy() {
           engines: pkg.engines,
           dependencies: pkg.dependencies,
           scripts: {
-            start: 'node server.js',
+            start:
+              'node --optimize_for_size --max_old_space_size=920 --gc_interval=100 index.js',
           },
         },
         null,
@@ -38,6 +39,9 @@ async function copy() {
     copyFile('LICENSE.txt', 'build/LICENSE.txt'),
     copyFile('yarn.lock', 'build/yarn.lock'),
     copyDir('public', 'build/public'),
+    copyFile('server/index.js', 'build/index.js'),
+    copyFile('newrelic.js', 'build/newrelic.js'),
+    copyFile('Procfile', 'build/Procfile'),
   ]);
 
   if (process.argv.includes('--watch')) {
