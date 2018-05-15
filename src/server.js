@@ -12,6 +12,7 @@ import express from 'express';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
+import helmet from 'helmet';
 import React from 'react';
 import ReactDOM from 'react-dom/server';
 import PrettyError from 'pretty-error';
@@ -44,14 +45,43 @@ global.navigator.userAgent = global.navigator.userAgent || 'all';
 
 const app = express();
 
-// Compression
-app.use(compression());
-
 //
 // If you are using proxy from external machine, you can set TRUST_PROXY env
 // Default is to trust proxy headers only from loopback interface.
 // -----------------------------------------------------------------------------
 app.set('trust proxy', config.trustProxy);
+
+//
+// Helmet
+// -----------------------------------------------------------------------------
+app.use(
+  helmet({
+    dnsPrefetchControl: false,
+    frameguard: false,
+    noSniff: false,
+  }),
+);
+
+//
+// Redirect
+// -----------------------------------------------------------------------------
+app.use((req, res, next) => {
+  if (process.env.NODE_ENV !== 'production') {
+    return next();
+  }
+  if (
+    req.headers['x-forwarded-proto'] &&
+    req.headers['x-forwarded-proto'] === 'http'
+  ) {
+    res.redirect(301, `https://${req.headers.host}${req.originalUrl}`);
+  }
+  return next();
+});
+
+//
+// Compression
+// -----------------------------------------------------------------------------
+app.use(compression());
 
 //
 // Register Node.js middleware

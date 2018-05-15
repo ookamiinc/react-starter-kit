@@ -6,9 +6,14 @@
     "node": ">=8.9.3",
     "npm": ">=5.5.1"
   },
-  "browserslist": [">1%", "last 4 versions", "Firefox ESR", "not ie < 9"],
+  "browserslist": [
+    ">1%",
+    "last 4 versions",
+    "Firefox ESR",
+    "not ie < 9"
+  ],
   "dependencies": {
-    "@babel/polyfill": "^7.0.0-beta.42",
+    "@babel/polyfill": "^7.0.0-beta.44",
     "@firebase/app": "^0.1.5",
     "@firebase/database": "^0.1.6",
     "axios": "^0.17.1",
@@ -16,21 +21,22 @@
     "classnames": "^2.2.5",
     "compression": "^1.7.1",
     "cookie-parser": "^1.4.3",
-    "core-js": "^2.5.3",
+    "core-js": "^2.5.4",
     "express": "^4.16.3",
     "google-spreadsheet": "^2.0.4",
+    "helmet": "^3.12.0",
     "history": "^4.7.2",
     "isomorphic-style-loader": "^4.0.0",
     "lodash": "^4.17.5",
     "newrelic": "^2.5.0",
-    "node-fetch": "^2.1.1",
+    "node-fetch": "^2.1.2",
     "normalize.css": "^8.0.0",
     "pretty-error": "^2.1.1",
     "prop-types": "^15.6.1",
     "query-string": "^6.0.0",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
-    "react-redux": "^5.0.6",
+    "react": "^16.3.2",
+    "react-dom": "^16.3.2",
+    "react-redux": "^5.0.7",
     "redux": "^3.7.2",
     "redux-devtools-extension": "^2.13.2",
     "redux-logger": "^3.0.6",
@@ -42,14 +48,14 @@
     "webshot": "^0.18.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.0.0-beta.42",
-    "@babel/node": "^7.0.0-beta.42",
-    "@babel/plugin-transform-react-constant-elements": "^7.0.0-beta.42",
-    "@babel/plugin-transform-react-inline-elements": "^7.0.0-beta.42",
-    "@babel/preset-env": "^7.0.0-beta.42",
-    "@babel/preset-flow": "^7.0.0-beta.42",
-    "@babel/preset-react": "^7.0.0-beta.42",
-    "@babel/preset-stage-2": "^7.0.0-beta.42",
+    "@babel/core": "^7.0.0-beta.44",
+    "@babel/node": "^7.0.0-beta.44",
+    "@babel/plugin-transform-react-constant-elements": "^7.0.0-beta.44",
+    "@babel/plugin-transform-react-inline-elements": "^7.0.0-beta.44",
+    "@babel/preset-env": "^7.0.0-beta.44",
+    "@babel/preset-flow": "^7.0.0-beta.44",
+    "@babel/preset-react": "^7.0.0-beta.44",
+    "@babel/preset-stage-2": "^7.0.0-beta.44",
     "autoprefixer": "^8.1.0",
     "babel-core": "^7.0.0-0",
     "babel-eslint": "^8.2.2",
@@ -67,12 +73,12 @@
     "eslint-loader": "^2.0.0",
     "eslint-plugin-css-modules": "^2.7.5",
     "eslint-plugin-flowtype": "^2.46.1",
-    "eslint-plugin-import": "^2.9.0",
+    "eslint-plugin-import": "^2.11.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-prettier": "^2.6.0",
     "eslint-plugin-react": "^7.7.0",
     "file-loader": "^1.1.11",
-    "flow-bin": "^0.68.0",
+    "flow-bin": "^0.69.0",
     "foreman": "^2.0.0",
     "front-matter": "^2.3.0",
     "glob": "^7.1.2",
@@ -81,7 +87,7 @@
     "jest": "^22.4.3",
     "jest-codemods": "^0.13.9",
     "jscodeshift": "^0.5.0",
-    "lint-staged": "^7.0.0",
+    "lint-staged": "^7.0.4",
     "markdown-it": "^8.4.1",
     "mkdirp": "^0.5.1",
     "node-sass": "^4.7.2",
@@ -107,28 +113,42 @@
     "prettier": "^1.11.1",
     "raw-loader": "^0.5.1",
     "react-deep-force-update": "^2.1.1",
-    "react-dev-utils": "^5.0.0",
+    "react-dev-utils": "^5.0.1",
     "react-error-overlay": "^4.0.0",
-    "react-test-renderer": "^16.2.0",
+    "react-test-renderer": "^16.3.2",
     "redux-mock-store": "^1.4.0",
     "rimraf": "^2.6.2",
     "sass-loader": "^6.0.6",
-    "stylelint": "^9.1.3",
+    "stylelint": "^9.2.0",
     "stylelint-config-standard": "^18.2.0",
     "stylelint-order": "^0.8.1",
     "svg-url-loader": "^2.3.2",
     "url-loader": "^1.0.1",
-    "webpack": "^4.2.0",
-    "webpack-assets-manifest": "^2.0.0",
+    "webpack": "^4.6.0",
+    "webpack-assets-manifest": "^3.0.1",
     "webpack-bundle-analyzer": "^2.11.1",
-    "webpack-dev-middleware": "^3.0.1",
+    "webpack-dev-middleware": "^3.1.3",
     "webpack-hot-middleware": "^2.21.2",
-    "webpack-node-externals": "^1.6.0"
+    "webpack-node-externals": "^1.7.2"
   },
   "lint-staged": {
-    "*.{js,jsx}": ["eslint --no-ignore --fix", "git add --force"],
-    "*.{json,md}": ["prettier --write", "git add --force"],
-    "*.{css,less,styl,scss,sass,sss}": ["stylelint --fix", "git add --force"]
+    "ignore": [
+      "package.json"
+    ],
+    "linters": {
+      "*.{js,jsx}": [
+        "eslint --no-ignore --fix",
+        "git add --force"
+      ],
+      "*.{json,md}": [
+        "prettier --write",
+        "git add --force"
+      ],
+      "*.{css,less,styl,scss,sass,sss}": [
+        "stylelint --fix",
+        "git add --force"
+      ]
+    }
   },
   "scripts": {
     "precommit": "lint-staged",
@@ -153,6 +173,7 @@
     "render": "babel-node tools/run render",
     "serve": "babel-node tools/run runServer",
     "start": "babel-node tools/run start",
-    "debug": "babel-node tools/run start --inspect"
+    "start:dev": "nf run babel-node tools/run start",
+    "debug": "nf run babel-node tools/run start -- --inspect"
   }
 }
