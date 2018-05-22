@@ -16,7 +16,7 @@
     "@babel/polyfill": "^7.0.0-beta.44",
     "@firebase/app": "^0.1.5",
     "@firebase/database": "^0.1.6",
-    "axios": "^0.17.1",
+    "bluebird": "^3.5.1",
     "body-parser": "^1.18.2",
     "classnames": "^2.2.5",
     "compression": "^1.7.1",
@@ -45,7 +45,7 @@
     "source-map-support": "^0.5.4",
     "throng": "^4.0.0",
     "universal-router": "^6.0.0",
-    "webshot": "^0.18.0"
+    "whatwg-fetch": "^2.0.4"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0-beta.44",
