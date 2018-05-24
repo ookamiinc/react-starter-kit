@@ -25,10 +25,7 @@ import router from './router';
 import chunks from './chunk-manifest.json'; // eslint-disable-line import/no-unresolved
 import configureStore from './store/configureStore';
 import config from './config';
-import {
-  API_URL_PATH_CATEGORY_SHEET,
-  API_URL_PATH_THUMBNAIL,
-} from './constants';
+import { API_URL_PATH_CATEGORY_SHEET } from './constants';
 
 process.on('unhandledRejection', (reason, p) => {
   console.error('Unhandled Rejection at:', p, 'reason:', reason);
@@ -114,11 +111,7 @@ app.use((req, res, next) => {
 //
 // Register Server API
 // -----------------------------------------------------------------------------
-const categorySheet = require('../server/api/categorySheet');
-const thumbnail = require('../server/api/thumbnail');
-
-app.get(API_URL_PATH_CATEGORY_SHEET, categorySheet.get);
-app.get(API_URL_PATH_THUMBNAIL, thumbnail.get);
+app.get(API_URL_PATH_CATEGORY_SHEET, require('./api/categorySheet').get);
 
 //
 // Register server-side rendering middleware
