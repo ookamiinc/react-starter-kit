@@ -17,6 +17,7 @@ if (process.env.BROWSER) {
 
 module.exports = {
   // Node.js app
+  host: process.env.HOST || 'localhost',
   port: process.env.PORT || 3000,
 
   // https://expressjs.com/en/guide/behind-proxies.html
@@ -29,24 +30,12 @@ module.exports = {
   },
 
   // Global variables
-  globals: {
-    'process.env.FIREBASE_API_KEY': JSON.stringify(
-      process.env.FIREBASE_API_KEY,
-    ),
-    'process.env.FIREBASE_DATABASE_URL': JSON.stringify(
-      process.env.FIREBASE_DATABASE_URL,
-    ),
-    'process.env.BASE_URL': JSON.stringify(process.env.BASE_URL),
-    'process.env.API_BASE_URL': JSON.stringify(process.env.API_BASE_URL),
-    'process.env.API_AUTH_TOKEN': JSON.stringify(process.env.API_AUTH_TOKEN),
-    'process.env.GOOGLE_CLIENT_EMAIL': JSON.stringify(
-      process.env.GOOGLE_CLIENT_EMAIL,
-    ),
-    'process.env.GOOGLE_PRIVATE_KEY': JSON.stringify(
-      process.env.GOOGLE_PRIVATE_KEY,
-    ),
-    'process.env.GOOGLE_SPREAD_SHEET_ID_FOR_CATEGORY': JSON.stringify(
-      process.env.GOOGLE_SPREAD_SHEET_ID_FOR_CATEGORY,
-    ),
+  env: {
+    API_AUTH_TOKEN: `"${process.env.API_AUTH_TOKEN}"`,
+    API_BASE_URL: `"${process.env.API_BASE_URL}"`,
+    AWS_ASSETS_URL: `"${process.env.AWS_ASSETS_URL}"`,
+    BASE_URL: `"${process.env.BASE_URL}"`,
+    FIREBASE_API_KEY: `"${process.env.FIREBASE_API_KEY}"`,
+    FIREBASE_DATABASE_URL: `"${process.env.FIREBASE_DATABASE_URL}"`,
   },
 };

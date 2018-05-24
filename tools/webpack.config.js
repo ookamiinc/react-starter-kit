@@ -14,7 +14,7 @@ import WebpackAssetsManifest from 'webpack-assets-manifest';
 import nodeExternals from 'webpack-node-externals';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import overrideRules from './lib/overrideRules';
-import { globals } from '../src/config';
+import { env } from '../src/config';
 import pkg from '../package.json';
 
 const ROOT_DIR = path.resolve(__dirname, '..');
@@ -51,12 +51,14 @@ const config = {
 
   output: {
     path: resolvePath(BUILD_DIR, 'public/assets'),
-    publicPath: '/assets/',
+    publicPath: isDebug
+      ? '/assets/'
+      : path.join(process.env.AWS_ASSETS_URL, 'build/'),
     pathinfo: isVerbose,
-    filename: isDebug ? '[name].js' : '[name].[chunkhash:8].js',
+    filename: isDebug ? '[name].js' : `${pkg.name}.[name].[chunkhash:8].js`,
     chunkFilename: isDebug
       ? '[name].chunk.js'
-      : '[name].[chunkhash:8].chunk.js',
+      : `${pkg.name}.[name].[chunkhash:8].chunk.js`,
     // Point sourcemap entries to original disk location (format as URL on Windows)
     devtoolModuleFilenameTemplate: info =>
       path.resolve(info.absoluteResourcePath).replace(/\\/g, '/'),
@@ -300,8 +302,8 @@ const clientConfig = {
     // Define free variables
     // https://webpack.js.org/plugins/define-plugin/
     new webpack.DefinePlugin({
+      'process.env': env,
       'process.env.BROWSER': true,
-      ...globals,
       __DEV__: isDebug,
     }),
 
@@ -309,7 +311,11 @@ const clientConfig = {
     // https://github.com/webdeveric/webpack-assets-manifest#options
     new WebpackAssetsManifest({
       output: `${BUILD_DIR}/asset-manifest.json`,
-      publicPath: true,
+      publicPath(filename) {
+        return isDebug
+          ? path.join('/assets/', filename)
+          : path.join(process.env.AWS_ASSETS_URL, 'build', filename);
+      },
       writeToDisk: true,
       customize: ({ key, value }) => {
         // You can prevent adding items to the manifest by returning false.
@@ -317,7 +323,7 @@ const clientConfig = {
         return { key, value };
       },
       done: (manifest, stats) => {
-        // Write chunk-manifest.json.json
+        // Write chunk-manifest.json
         const chunkFileName = `${BUILD_DIR}/chunk-manifest.json`;
         try {
           const fileFilter = file => !file.endsWith('.map');

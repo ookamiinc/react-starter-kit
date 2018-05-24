@@ -13,6 +13,7 @@ import clean from './clean';
 import copy from './copy';
 import bundle from './bundle';
 import render from './render';
+import upload from './upload';
 import pkg from '../package.json';
 
 /**
@@ -23,6 +24,7 @@ async function build() {
   await run(clean);
   await run(copy);
   await run(bundle);
+  await run(upload);
 
   if (process.argv.includes('--static')) {
     await run(render);
