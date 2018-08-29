@@ -100,16 +100,13 @@ const config = {
               {
                 targets: {
                   browsers: pkg.browserslist,
-                  forceAllTransforms: !isDebug, // for UglifyJS
                 },
+                forceAllTransforms: !isDebug, // for UglifyJS
                 modules: false,
                 useBuiltIns: false,
                 debug: false,
               },
             ],
-            // Experimental ECMAScript proposals
-            // https://babeljs.io/docs/plugins/#presets-stage-x-experimental-presets-
-            ['@babel/preset-stage-2', { decoratorsLegacy: true }],
             // Flow
             // https://github.com/babel/babel/tree/master/packages/babel-preset-flow
             '@babel/preset-flow',
@@ -118,6 +115,17 @@ const config = {
             ['@babel/preset-react', { development: isDebug }],
           ],
           plugins: [
+            // Stage 2
+            ['@babel/plugin-proposal-decorators', { legacy: true }],
+            '@babel/plugin-proposal-function-sent',
+            '@babel/plugin-proposal-export-namespace-from',
+            '@babel/plugin-proposal-numeric-separator',
+            '@babel/plugin-proposal-throw-expressions',
+            // Stage 3
+            '@babel/plugin-syntax-dynamic-import',
+            '@babel/plugin-syntax-import-meta',
+            ['@babel/plugin-proposal-class-properties', { loose: false }],
+            '@babel/plugin-proposal-json-strings',
             // Treat React JSX elements as value types and hoist them to the highest scope
             // https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-react-constant-elements
             ...(isDebug ? [] : ['@babel/transform-react-constant-elements']),
