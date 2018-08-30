@@ -4,6 +4,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import { connect } from 'react-redux';
+import { isEqual } from 'lodash';
 import { getStream } from '../../actions/stream';
 import { getSheet } from '../../actions/categorySheet';
 import s from './Home.scss';
@@ -20,6 +21,10 @@ class Home extends React.Component {
     const { getStream, getSheet } = this.props;
     getStream(428);
     getSheet('staging-test');
+  }
+
+  shouldComponentUpdate(nextProps) {
+    return !isEqual(nextProps, this.props);
   }
 
   render() {
@@ -46,4 +51,7 @@ const mapDispatch = {
   getSheet,
 };
 
-export default connect(mapState, mapDispatch)(withStyles(s)(Home));
+export default connect(
+  mapState,
+  mapDispatch,
+)(withStyles(s)(Home));

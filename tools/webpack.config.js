@@ -132,6 +132,21 @@ const config = {
             // Replaces the React.createElement function with one that is more optimized for production
             // https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-react-inline-elements
             ...(isDebug ? [] : ['@babel/transform-react-inline-elements']),
+            // https://github.com/gutenye/babel-plugin-transform-imports
+            ...(isDebug
+              ? []
+              : [
+                  [
+                    'transform-imports',
+                    {
+                      lodash: {
+                        /* eslint-disable-next-line no-template-curly-in-string */
+                        transform: 'lodash/${member}',
+                        preventFullImport: true,
+                      },
+                    },
+                  ],
+                ]),
             // Remove unnecessary React propTypes from the production build
             // https://github.com/oliviertassinari/babel-plugin-transform-react-remove-prop-types
             ...(isDebug ? [] : ['transform-react-remove-prop-types']),
