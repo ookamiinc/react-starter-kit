@@ -1,7 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 
-import firebase from '@firebase/app';
-import '@firebase/database';
+import firebase from 'firebase/app';
+import 'firebase/database';
 
 let database;
 
