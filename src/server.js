@@ -25,7 +25,7 @@ import router from './router';
 import chunks from './chunk-manifest.json'; // eslint-disable-line import/no-unresolved
 import configureStore from './store/configureStore';
 import config from './config';
-import { API_URL_PATH_CATEGORY_SHEET } from './constants';
+import { API_URL_PATH_CATEGORY_SHEET } from './constants/url';
 
 process.on('unhandledRejection', (reason, p) => {
   console.error('Unhandled Rejection at:', p, 'reason:', reason);

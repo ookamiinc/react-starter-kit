@@ -1,11 +1,11 @@
 /* eslint-disable import/prefer-default-export */
 
 import axios from 'axios';
+import { SET_SHEET } from '../constants/actionType';
 import {
-  SET_SHEET,
   API_URL_PATH_CATEGORY_SHEET,
   CATEGORY_BASE_URL,
-} from '../constants';
+} from '../constants/url';
 
 function createBreadcrumbs(breadcrumbs, id, name) {
   const resultList = [

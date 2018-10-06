@@ -1,6 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 
-import { SET_STREAM, API_URL_PATH_LIVE } from '../constants';
+import { SET_STREAM } from '../constants/actionType';
+import { API_URL_PATH_LIVE } from '../constants/url';
 import { getDatabase } from '../firebase';
 import { get } from '../utils/api';
 

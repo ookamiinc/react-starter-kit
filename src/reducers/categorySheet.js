@@ -1,4 +1,4 @@
-import { SET_SHEET } from '../constants';
+import { SET_SHEET } from '../constants/actionType';
 
 const initialState = {
   sheet: {},

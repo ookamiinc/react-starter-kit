@@ -1,4 +1,4 @@
-import { SET_STREAM } from '../constants';
+import { SET_STREAM } from '../constants/actionType';
 
 const initialState = {
   stream: {},
