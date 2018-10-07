@@ -7,6 +7,7 @@
  * LICENSE.txt file in the root directory of this source tree.
  */
 
+import { throttle } from 'lodash';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import deepForceUpdate from 'react-deep-force-update';
@@ -15,19 +16,32 @@ import { createPath } from 'history/PathUtils';
 import App from './components/App';
 import configureStore from './store/configureStore';
 import history from './history';
+import { loadState, saveState } from './localStorage';
 import { updateMeta } from './DOMUtils';
 import router from './router';
 
 // Get initial data
-const state = JSON.parse(
+const initialState = JSON.parse(
   document.getElementById('initial-data').getAttribute('data-json'),
 );
 
+// Get initial data of LocalStorage
+const localStorageState = loadState();
+const mergedState = Object.assign({}, initialState, localStorageState);
+
 // Initialize a new Redux store
 // http://redux.js.org/docs/basics/UsageWithReact.html
-const store = configureStore(state, {
+const store = configureStore(mergedState, {
   history,
 });
+
+store.subscribe(
+  throttle(() => {
+    saveState({
+      live: store.getState().live,
+    });
+  }, 1000),
+);
 
 // Global (context) variables that can be easily accessed from any React component
 // https://facebook.github.io/react/docs/context.html

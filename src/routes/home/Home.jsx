@@ -5,8 +5,8 @@ import PropTypes from 'prop-types';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import { connect } from 'react-redux';
 import { isEqual } from 'lodash';
-import { getStream } from '../../actions/stream';
-import { getSheet } from '../../actions/categorySheet';
+import { getStream } from '../../actions/live';
+import { getSheet } from '../../actions/category';
 import s from './Home.scss';
 
 class Home extends React.Component {
@@ -42,8 +42,8 @@ class Home extends React.Component {
 }
 
 const mapState = state => ({
-  stream: state.stream.stream,
-  sheet: state.categorySheet.sheet,
+  stream: state.live.stream,
+  sheet: state.category.sheet,
 });
 
 const mapDispatch = {

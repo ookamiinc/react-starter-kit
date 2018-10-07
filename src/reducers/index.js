@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import stream from './stream';
-import categorySheet from './categorySheet';
+import live from './live';
+import category from './category';
 
 export default combineReducers({
-  stream,
-  categorySheet,
+  live,
+  category,
 });
