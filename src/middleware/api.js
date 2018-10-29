@@ -44,6 +44,12 @@ const createConfig = (authToken, url, method, params) => {
   return config;
 };
 
+const actionWith = (action, data) => {
+  const finalAction = Object.assign({}, action, data);
+  delete finalAction[CALL_API];
+  return finalAction;
+};
+
 // A Redux middleware that interprets actions with CALL_API info specified.
 // Performs the call and promises when such actions are dispatched.
 export default store => next => action => {
@@ -68,26 +74,20 @@ export default store => next => action => {
     throw new Error('Expected action type to be strings.');
   }
 
-  const actionWith = data => {
-    const finalAction = Object.assign({}, action, data);
-    delete finalAction[CALL_API];
-    return finalAction;
-  };
-
   const { user = {} } = store.getState();
   const authToken = user.authToken || process.env.API_AUTH_TOKEN;
   const config = createConfig(authToken, url, method, params);
   return instance.request(config).then(
     response =>
       next(
-        actionWith({
+        actionWith(action, {
           type,
           payload: response.data,
         }),
       ),
     error =>
       next(
-        actionWith({
+        actionWith(action, {
           type,
           error: true,
           payload: new Error(

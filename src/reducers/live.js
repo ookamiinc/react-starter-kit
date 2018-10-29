@@ -2,7 +2,7 @@ import { SET_STREAM } from '../constants/actionType';
 
 const initialState = {
   stream: {},
-  error: false,
+  error: null,
 };
 
 export default function(state = initialState, action) {
@@ -10,7 +10,7 @@ export default function(state = initialState, action) {
     case SET_STREAM: {
       if (action.error) {
         return Object.assign({}, state, {
-          error: action.error,
+          error: action.payload,
         });
       }
       return Object.assign({}, state, {

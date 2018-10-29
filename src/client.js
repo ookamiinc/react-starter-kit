@@ -37,8 +37,9 @@ const store = configureStore(mergedState, {
 
 store.subscribe(
   throttle(() => {
+    const { live } = store.getState();
     saveState({
-      live: store.getState().live,
+      live,
     });
   }, 1000),
 );
