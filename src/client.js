@@ -13,10 +13,10 @@ import ReactDOM from 'react-dom';
 import deepForceUpdate from 'react-deep-force-update';
 import queryString from 'query-string';
 import { createPath } from 'history/PathUtils';
+import { verifyAuthToken } from './actions/authentication';
 import App from './components/App';
 import configureStore from './store/configureStore';
 import history from './history';
-import { loadState, saveState } from './localStorage';
 import { updateMeta } from './DOMUtils';
 import router from './router';
 
@@ -25,22 +25,19 @@ const initialState = JSON.parse(
   document.getElementById('initial-data').getAttribute('data-json'),
 );
 
-// Get initial data of LocalStorage
-const localStorageState = loadState();
-const mergedState = Object.assign({}, initialState, localStorageState);
-
 // Initialize a new Redux store
 // http://redux.js.org/docs/basics/UsageWithReact.html
-const store = configureStore(mergedState, {
+const store = configureStore(initialState, {
   history,
 });
 
 store.subscribe(
   throttle(() => {
-    const { live } = store.getState();
-    saveState({
-      live,
-    });
+    const { authentication } = store.getState();
+    const email = (authentication.user && authentication.user.email) || '';
+    const token = (authentication.user && authentication.user.auth_token) || '';
+    localStorage.setItem('auth_email', email);
+    localStorage.setItem('auth_token', token);
   }, 1000),
 );
 
@@ -97,6 +94,14 @@ async function onLocationChange(location, action) {
     if (route.redirect) {
       history.replace(route.redirect);
       return;
+    }
+
+    if (isInitialRender) {
+      const authEmail = localStorage.getItem('auth_email');
+      const authToken = localStorage.getItem('auth_token');
+      if (authEmail && authToken) {
+        await store.dispatch(verifyAuthToken(authEmail, authToken));
+      }
     }
 
     const renderReactApp = isInitialRender ? ReactDOM.hydrate : ReactDOM.render;

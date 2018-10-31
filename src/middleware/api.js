@@ -26,16 +26,16 @@ const instance = axios.create({
   },
 });
 
-const createConfig = (authToken, url, method, params) => {
+const createConfig = (email, token, url, method, params) => {
   const config = { method, url };
   switch (method) {
     case GET_METHOD: {
-      config.params = { auth_token: authToken, ...params };
+      config.params = { auth_email: email, auth_token: token, ...params };
       break;
     }
     case POST_METHOD:
     case DELETE_METHOD: {
-      config.data = { auth_token: authToken, ...params };
+      config.data = { auth_email: email, auth_token: token, ...params };
       break;
     }
     default:
@@ -52,7 +52,7 @@ const actionWith = (action, data) => {
 
 // A Redux middleware that interprets actions with CALL_API info specified.
 // Performs the call and promises when such actions are dispatched.
-export default store => next => action => {
+export default store => next => async action => {
   const callAPI = action[CALL_API];
   if (typeof callAPI === 'undefined') {
     return next(action);
@@ -74,9 +74,10 @@ export default store => next => action => {
     throw new Error('Expected action type to be strings.');
   }
 
-  const { user = {} } = store.getState();
-  const authToken = user.authToken || process.env.API_AUTH_TOKEN;
-  const config = createConfig(authToken, url, method, params);
+  const { authentication: user = {} } = store.getState();
+  const email = (user && user.email) || '';
+  const token = (user && user.auth_token) || process.env.API_AUTH_TOKEN;
+  const config = createConfig(email, token, url, method, params);
   return instance.request(config).then(
     response =>
       next(
@@ -91,7 +92,11 @@ export default store => next => action => {
           type,
           error: true,
           payload: new Error(
-            (error.response && error.response.message) || error.message,
+            (error.response &&
+              error.response.data &&
+              error.response.data.error &&
+              error.response.data.error.message) ||
+              error.message,
           ),
         }),
       ),

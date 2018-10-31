@@ -1,20 +1,25 @@
-import { SET_STREAM } from '../constants/actionType';
+import { VERIFY_AUTH_TOKEN } from '../constants/actionType';
 
 const initialState = {
   error: null,
-  stream: {},
+  loggedIn: false,
+  user: {},
 };
 
 export default function(state = initialState, action) {
   switch (action.type) {
-    case SET_STREAM: {
+    case VERIFY_AUTH_TOKEN: {
       if (action.error) {
         return Object.assign({}, state, {
           error: action.payload,
+          loggedIn: false,
+          user: {},
         });
       }
       return Object.assign({}, state, {
-        stream: action.payload,
+        error: null,
+        loggedIn: true,
+        user: action.payload.user,
       });
     }
     default:

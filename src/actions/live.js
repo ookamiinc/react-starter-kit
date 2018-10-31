@@ -2,7 +2,7 @@
 
 import { CALL_API, SET_STREAM } from '../constants/actionType';
 import { GET_METHOD } from '../constants/api';
-import { API_URL_PATH_LIVE } from '../constants/url';
+import { STREAMS_SHOW } from '../constants/url';
 import { getDatabase } from '../firebase';
 
 let streamRef;
@@ -11,7 +11,7 @@ const getStream = streamId => ({
   [CALL_API]: {
     method: GET_METHOD,
     type: SET_STREAM,
-    url: API_URL_PATH_LIVE,
+    url: STREAMS_SHOW,
     params: {
       stream_id: streamId,
     },

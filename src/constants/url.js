@@ -1,5 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 
-export const API_URL_PATH_LIVE = '/streams/show';
-export const API_URL_PATH_CATEGORY_SHEET = '/api/category-sheet';
 export const CATEGORY_BASE_URL = `${process.env.BASE_URL}/category`;
+export const CATEGORY_SHEET = '/api/category-sheet';
+export const STREAMS_SHOW = '/streams/show';
+export const USERS_VERIFY_CREDENTIALS = '/users/verify_credentials';
