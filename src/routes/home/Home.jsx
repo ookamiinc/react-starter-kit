@@ -5,21 +5,21 @@ import PropTypes from 'prop-types';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import { connect } from 'react-redux';
 import { isEqual } from 'lodash';
-import { getStream } from '../../actions/stream';
-import { getSheet } from '../../actions/categorySheet';
+import { watchStream } from '../../actions/live';
+import { getSheet } from '../../actions/category';
 import s from './Home.scss';
 
 class Home extends React.Component {
   static propTypes = {
     stream: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
     sheet: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
-    getStream: PropTypes.func.isRequired,
+    watchStream: PropTypes.func.isRequired,
     getSheet: PropTypes.func.isRequired,
   };
 
   componentDidMount() {
-    const { getStream, getSheet } = this.props;
-    getStream(428);
+    const { watchStream, getSheet } = this.props;
+    watchStream(428);
     getSheet('staging-test');
   }
 
@@ -42,12 +42,12 @@ class Home extends React.Component {
 }
 
 const mapState = state => ({
-  stream: state.stream.stream,
-  sheet: state.categorySheet.sheet,
+  stream: state.live.stream,
+  sheet: state.category.sheet,
 });
 
 const mapDispatch = {
-  getStream,
+  watchStream,
   getSheet,
 };
 

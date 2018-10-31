@@ -25,7 +25,7 @@ import router from './router';
 import chunks from './chunk-manifest.json'; // eslint-disable-line import/no-unresolved
 import configureStore from './store/configureStore';
 import config from './config';
-import { API_URL_PATH_CATEGORY_SHEET } from './constants';
+import { CATEGORY_SHEET } from './constants/url';
 
 process.on('unhandledRejection', (reason, p) => {
   console.error('Unhandled Rejection at:', p, 'reason:', reason);
@@ -89,29 +89,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 //
-// Authentication
-// -----------------------------------------------------------------------------
-app.use((req, res, next) => {
-  if (!req.query.sessionID) {
-    next();
-    return;
-  }
-  res.cookie('sid', req.query.sessionID, {
-    ...(req.query.maxAge ? { maxAge: req.query.maxAge } : {}),
-    httpOnly: true,
-  });
-
-  res.redirect(
-    req.originalUrl
-      .replace(/[?&]sessionID=[^&]+/, '')
-      .replace(/[?&]maxAge=[^&]+/, ''),
-  );
-});
-
-//
 // Register Server API
 // -----------------------------------------------------------------------------
-app.get(API_URL_PATH_CATEGORY_SHEET, require('./api/categorySheet').get);
+app.get(CATEGORY_SHEET, require('./api/categorySheet').get);
 
 //
 // Register server-side rendering middleware

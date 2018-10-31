@@ -1,11 +1,8 @@
 /* eslint-disable import/prefer-default-export */
 
 import axios from 'axios';
-import {
-  SET_SHEET,
-  API_URL_PATH_CATEGORY_SHEET,
-  CATEGORY_BASE_URL,
-} from '../constants';
+import { SET_SHEET } from '../constants/actionType';
+import { CATEGORY_BASE_URL, CATEGORY_SHEET } from '../constants/url';
 
 function createBreadcrumbs(breadcrumbs, id, name) {
   const resultList = [
@@ -51,7 +48,7 @@ function setSheet(row = {}) {
 }
 
 export const getSheet = id => dispatch => {
-  const API_URL = `${process.env.BASE_URL}${API_URL_PATH_CATEGORY_SHEET}`;
+  const API_URL = `${process.env.BASE_URL}${CATEGORY_SHEET}`;
   return axios
     .get(API_URL, {
       params: {

@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux';
-import stream from './stream';
-import categorySheet from './categorySheet';
+import authentication from './authentication';
+import category from './category';
+import live from './live';
 
 export default combineReducers({
-  stream,
-  categorySheet,
+  authentication,
+  live,
+  category,
 });
