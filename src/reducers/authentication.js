@@ -1,5 +1,6 @@
 import { VERIFY_AUTH_TOKEN } from '../constants/actionType';
 
+const UNAUTHORIZED = 401;
 const initialState = {
   error: null,
   loggedIn: false,
@@ -22,7 +23,14 @@ export default function(state = initialState, action) {
         user: action.payload.user,
       });
     }
-    default:
+    default: {
+      if (action.error && action.meta && action.meta.status === UNAUTHORIZED) {
+        return Object.assign({}, state, {
+          loggedIn: false,
+          user: {},
+        });
+      }
       return state;
+    }
   }
 }
