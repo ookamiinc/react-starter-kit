@@ -5,6 +5,6 @@ import live from './live';
 
 export default combineReducers({
   authentication,
-  live,
   category,
+  live,
 });

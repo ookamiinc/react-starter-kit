@@ -98,6 +98,9 @@ export default store => next => async action => {
               error.response.data.error.message) ||
               error.message,
           ),
+          meta: {
+            status: error.response && error.response.status,
+          },
         }),
       ),
   );
