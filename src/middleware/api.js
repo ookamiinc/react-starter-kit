@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { camelizeKeys } from 'humps';
+import { normalize } from 'normalizr';
 import { CALL_API } from '../constants/actionType';
 import {
   API_OOKAMI_CLIENT_APPLICATION_VERSION,
@@ -26,7 +28,9 @@ const instance = axios.create({
   },
 });
 
-const createConfig = (email, token, url, method, params) => {
+const createConfig = (user, url, method, params) => {
+  const email = (user && user.email) || '';
+  const token = (user && user.authToken) || process.env.API_AUTH_TOKEN;
   const config = { method, url };
   switch (method) {
     case GET_METHOD: {
@@ -44,6 +48,21 @@ const createConfig = (email, token, url, method, params) => {
   return config;
 };
 
+const createResponse = (json, schema) => {
+  const camelizedJson = camelizeKeys(json);
+  if (!schema) return camelizedJson;
+  return normalize(camelizedJson, schema);
+};
+
+const createError = error =>
+  new Error(
+    (error.response &&
+      error.response.data &&
+      error.response.data.error &&
+      error.response.data.error.message) ||
+      error.message,
+  );
+
 const actionWith = (action, data) => {
   const finalAction = Object.assign({}, action, data);
   delete finalAction[CALL_API];
@@ -58,11 +77,8 @@ export default store => next => async action => {
     return next(action);
   }
 
-  const { url, method, type, params } = callAPI;
+  const { method, params, schema, types, url } = callAPI;
 
-  if (typeof url !== 'string') {
-    throw new Error('Expected url to be strings.');
-  }
   if (typeof method !== 'string') {
     throw new Error('Expected method to be strings.');
   }
@@ -70,34 +86,40 @@ export default store => next => async action => {
   if (!method || !reg.test(method)) {
     throw new Error('Specify one of method.');
   }
-  if (typeof type !== 'string') {
-    throw new Error('Expected action type to be strings.');
+  // if (!schema) {
+  //   throw new Error('Specify one of the exported Schemas.');
+  // }
+  if (!Array.isArray(types) || types.length !== 3) {
+    throw new Error('Expected an array of three action types.');
+  }
+  if (!types.every(type => typeof type === 'string')) {
+    throw new Error('Expected action types to be strings.');
+  }
+  if (typeof url !== 'string') {
+    throw new Error('Expected url to be strings.');
   }
 
-  const { authentication: user = {} } = store.getState();
-  const email = (user && user.email) || '';
-  const token = (user && user.auth_token) || process.env.API_AUTH_TOKEN;
-  const config = createConfig(email, token, url, method, params);
+  const [requestType, successType, failureType] = types;
+  next(actionWith(action, { type: requestType }));
+
+  const {
+    authentication: { user },
+  } = store.getState();
+  const config = createConfig(user, url, method, params);
   return instance.request(config).then(
     response =>
       next(
         actionWith(action, {
-          type,
-          payload: response.data,
+          type: successType,
+          payload: createResponse(response.data, schema),
         }),
       ),
     error =>
       next(
         actionWith(action, {
-          type,
+          type: failureType,
           error: true,
-          payload: new Error(
-            (error.response &&
-              error.response.data &&
-              error.response.data.error &&
-              error.response.data.error.message) ||
-              error.message,
-          ),
+          payload: createError(error),
           meta: {
             status: error.response && error.response.status,
           },

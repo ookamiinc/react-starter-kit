@@ -1,26 +1,35 @@
-import { VERIFY_AUTH_TOKEN } from '../constants/actionType';
+import {
+  VERIFY_AUTH_TOKEN_REQUEST,
+  VERIFY_AUTH_TOKEN_SUCCESS,
+  VERIFY_AUTH_TOKEN_FAILURE,
+} from '../constants/actionType';
 
 const UNAUTHORIZED = 401;
 const initialState = {
-  error: null,
+  isFetching: false,
   loggedIn: false,
   user: {},
 };
 
 export default function(state = initialState, action) {
   switch (action.type) {
-    case VERIFY_AUTH_TOKEN: {
-      if (action.error) {
-        return Object.assign({}, state, {
-          error: action.payload,
-          loggedIn: false,
-          user: {},
-        });
-      }
+    case VERIFY_AUTH_TOKEN_REQUEST: {
       return Object.assign({}, state, {
-        error: null,
+        isFetching: true,
+      });
+    }
+    case VERIFY_AUTH_TOKEN_SUCCESS: {
+      return Object.assign({}, state, {
+        isFetching: false,
         loggedIn: true,
         user: action.payload.user,
+      });
+    }
+    case VERIFY_AUTH_TOKEN_FAILURE: {
+      return Object.assign({}, state, {
+        isFetching: false,
+        loggedIn: false,
+        user: {},
       });
     }
     default: {

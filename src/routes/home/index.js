@@ -10,11 +10,11 @@
 import React from 'react';
 import Home from './Home';
 import Layout from '../../components/Layout';
-import { loadStream } from '../../actions/live';
+import { loadStream } from '../../actions/stream';
 
 async function action({ store }) {
   await store.dispatch(loadStream(428));
-  const { stream } = store.getState().live;
+  const stream = store.getState().entities.streams[428];
   return {
     title: 'Home',
     chunks: ['home'],
