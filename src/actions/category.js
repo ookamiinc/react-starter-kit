@@ -1,8 +1,11 @@
 /* eslint-disable import/prefer-default-export */
 
 import axios from 'axios';
+import { camelizeKeys } from 'humps';
+import { normalize } from 'normalizr';
 import { SET_SHEET } from '../constants/actionType';
 import { CATEGORY_BASE_URL, CATEGORY_SHEET } from '../constants/url';
+import { CATEGORY } from '../schemas';
 
 function createBreadcrumbs(breadcrumbs, id, name) {
   const resultList = [
@@ -26,7 +29,7 @@ function createBreadcrumbs(breadcrumbs, id, name) {
 
 function setSheet(row = {}) {
   const breadcrumbs = (row.breadcrumbs && JSON.parse(row.breadcrumbs)) || [];
-  const sheet = {
+  const json = {
     id: row.id || '',
     name: row.name || '',
     streamIdList: (row.streamidlist && JSON.parse(row.streamidlist)) || [],
@@ -38,12 +41,11 @@ function setSheet(row = {}) {
     summary: row.summary || '',
     sportId: (row.sportid && parseInt(row.sportid, 10)) || 0,
   };
+  const camelizedJson = camelizeKeys(json);
 
   return {
     type: SET_SHEET,
-    payload: {
-      sheet,
-    },
+    payload: normalize(camelizedJson, CATEGORY),
   };
 }
 

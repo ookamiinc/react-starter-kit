@@ -33,11 +33,13 @@ const store = configureStore(initialState, {
 
 store.subscribe(
   throttle(() => {
-    const { authentication } = store.getState();
-    const email = (authentication.user && authentication.user.email) || '';
-    const token = (authentication.user && authentication.user.auth_token) || '';
-    localStorage.setItem('auth_email', email);
-    localStorage.setItem('auth_token', token);
+    const {
+      authentication: { user },
+    } = store.getState();
+    const email = (user && user.email) || '';
+    const token = (user && user.authToken) || '';
+    localStorage.setItem('authEmail', email);
+    localStorage.setItem('authToken', token);
   }, 1000),
 );
 
@@ -97,8 +99,8 @@ async function onLocationChange(location, action) {
     }
 
     if (isInitialRender) {
-      const authEmail = localStorage.getItem('auth_email');
-      const authToken = localStorage.getItem('auth_token');
+      const authEmail = localStorage.getItem('authEmail');
+      const authToken = localStorage.getItem('authToken');
       if (authEmail && authToken) {
         await store.dispatch(verifyAuthToken(authEmail, authToken));
       }
