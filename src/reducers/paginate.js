@@ -40,8 +40,8 @@ const paginate = ({ types, mapActionToKey }) => {
           ),
           isFetching: false,
           liveCount: action.payload.result.liveCount || 0,
-          page: action.payload.result.page,
-          totalPages: action.payload.result.totalPages,
+          page: action.payload.result.page || 0,
+          totalPages: action.payload.result.totalPages || 0,
         };
       case failureType:
         return {
