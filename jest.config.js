@@ -57,7 +57,11 @@ module.exports = {
   // https://facebook.github.io/jest/docs/en/configuration.html#modulefileextensions-array-string
   moduleFileExtensions: ['js', 'json', 'jsx', 'node'],
 
-  // moduleDirectories: // [array<string>]
+  moduleDirectories: [
+    'node_modules',
+    'test', // a test directory
+    __dirname, // the root directory
+  ],
 
   // A map from regular expressions to module names that allow to stub out resources,
   // like images or styles with a single module.
@@ -78,7 +82,9 @@ module.exports = {
   // rootDir: // [string]
   // roots: // [array<string>]
   // setupFiles: // [array]
-  // setupTestFrameworkScriptFile: // [string]
+
+  setupTestFrameworkScriptFile: require.resolve('./jest.setup.js'),
+
   // snapshotSerializers: // [array<string>]
   // testEnvironment: // [string]
   // testMatch: // [array<string>]
