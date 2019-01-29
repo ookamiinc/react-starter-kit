@@ -83,7 +83,7 @@ module.exports = {
   // roots: // [array<string>]
   // setupFiles: // [array]
 
-  setupTestFrameworkScriptFile: require.resolve('./jest.setup.js'),
+  setupTestFrameworkScriptFile: require.resolve('./test/setup.js'),
 
   // snapshotSerializers: // [array<string>]
   // testEnvironment: // [string]
