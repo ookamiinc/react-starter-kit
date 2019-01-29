@@ -3,6 +3,9 @@
 # Dependencies
 node_modules/
 
+# Type
+flow-typed/
+
 # Compiled output
 build
 
