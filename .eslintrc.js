@@ -25,6 +25,10 @@ module.exports = {
 
   globals: {
     __DEV__: true,
+    page: true,
+    browser: true,
+    context: true,
+    jestPuppeteer: true,
   },
 
   env: {
