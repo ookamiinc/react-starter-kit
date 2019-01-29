@@ -81,17 +81,17 @@ export const loadStream = id => async (dispatch, getState) => {
 };
 
 export const loadFixtures = competitionId => async (dispatch, getState) => {
-  const { page = 1, totalPages = 1 } =
+  const { page = 0, totalPages = 0 } =
     getState().pagination.fixturesByCompetition || {};
-  if (totalPages > 1 && page >= totalPages) return null;
-  return dispatch(fetchFixtures(competitionId, page));
+  if (page > 0 && page >= totalPages) return null;
+  return dispatch(fetchFixtures(competitionId, page + 1));
 };
 
 export const loadResults = competitionId => async (dispatch, getState) => {
-  const { page = 1, totalPages = 1 } =
+  const { page = 0, totalPages = 0 } =
     getState().pagination.resultsByCompetition || {};
-  if (totalPages > 1 && page >= totalPages) return null;
-  return dispatch(fetchResults(competitionId, page));
+  if (page > 0 && page >= totalPages) return null;
+  return dispatch(fetchResults(competitionId, page + 1));
 };
 
 export const watchStream = id => dispatch => {
