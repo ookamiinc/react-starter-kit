@@ -21,7 +21,7 @@ module.exports = {
     'prettier/react',
   ],
 
-  plugins: ['flowtype', 'css-modules', 'prettier'],
+  plugins: ['flowtype', 'css-modules', 'jest', 'prettier'],
 
   globals: {
     __DEV__: true,
@@ -29,6 +29,7 @@ module.exports = {
 
   env: {
     browser: true,
+    'jest/globals': true,
   },
 
   rules: {
@@ -103,7 +104,7 @@ module.exports = {
     // https://github.com/benmosher/eslint-plugin-import/tree/master/resolvers
     'import/resolver': {
       node: {
-        moduleDirectory: ['node_modules', 'src'],
+        moduleDirectory: ['node_modules', 'src', 'test'],
       },
     },
   },
