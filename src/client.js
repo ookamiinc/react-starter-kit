@@ -56,7 +56,6 @@ const context = {
     };
   },
   store,
-  storeSubscription: null,
 };
 
 const container = document.getElementById('app');
